@@ -5,13 +5,9 @@ class EntityTest extends \PHPUnit_Framework_TestCase {
 	protected static $app;
 
 	public static function setUpBeforeClass() {
-		if(!defined('_ENV_'))
-			define('_ENV_', 'test');
-
 		$app = new \Asgard\Container\Container;
 		$app['config'] = new \Asgard\Config\Config;
 		$app['config']->set('locale', 'en');
-		$app['config']->set('locales', ['fr', 'en']);
 		$app['hooks'] = new \Asgard\Hook\HooksManager($app);
 		$app['cache'] = new \Asgard\Cache\NullCache;
 		$app['rulesregistry'] = new \Asgard\Validation\RulesRegistry;
@@ -20,7 +16,7 @@ class EntityTest extends \PHPUnit_Framework_TestCase {
 		static::$app = $app;
 	}
 
-	public function test1() {
+	public function test() {
 		$news = new Classes\News([
 			'title' => 'Test Title',
 			'content' => 'Test Content',
@@ -151,32 +147,6 @@ class EntityTest extends \PHPUnit_Framework_TestCase {
 		$this->assertNull($news->something);
 		$news->something = 'bla';
 		$this->assertEquals('bla', $news->something);
-
-		$news = new Classes\Newsi18n;
-		$news->title = 'English Title';
-		$this->assertEquals('English Title', $news->title);
-		$news->set('title', 'Titre Français', 'fr');
-		$this->assertEquals('English Title', $news->get('title', 'en'));
-		$this->assertEquals('Titre Français', $news->get('title', 'fr'));
-		$this->assertEquals(
-			[
-				'fr' => 'Titre Français',
-				'en' => 'English Title',
-			],
-			$news->get('title', 'all')
-		);
-
-		$news->set('title', [
-			'fr' => 'Autre titre',
-			'en' => 'Another title',
-		], 'all');
-		$this->assertEquals(
-			[
-				'fr' => 'Autre titre',
-				'en' => 'Another title',
-			],
-			$news->get('title', 'all')
-		);
 
 		#setHook
 		$news = new Classes\NewsHook([

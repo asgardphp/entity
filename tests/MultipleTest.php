@@ -5,9 +5,6 @@ class MultipleTest extends \PHPUnit_Framework_TestCase {
 	protected static $app;
 
 	public static function setUpBeforeClass() {
-		if(!defined('_ENV_'))
-			define('_ENV_', 'test');
-
 		$app = new \Asgard\Container\Container();
 		$app['config'] = new \Asgard\Config\Config();
 		$app['hooks'] = new \Asgard\Hook\HooksManager($app);

@@ -1,18 +1,18 @@
 <?php
-namespace Asgard\Entity\Properties;
+namespace Asgard\Entity\Property;
 
 /**
- * Integer Property.
+ * String Property.
  * @author Michel Hognerud <michel@hognerud.com>
  */
-class IntegerProperty extends \Asgard\Entity\Property {
+class StringProperty extends \Asgard\Entity\Property {
 	/**
 	 * {@inheritDoc}
 	 */
-	public function doSet($val, \Asgard\Entity\Entity $entity, $name) {
-		if($val === null || $val === false || $val === '')
-			return null;
-		return (int)$val;
+	public function __construct(array $params) {
+		if(!isset($params['length']))
+			$params['length'] = 255;
+		parent::__construct($params);
 	}
 
 	/**
@@ -21,17 +21,18 @@ class IntegerProperty extends \Asgard\Entity\Property {
 	 */
 	public function getORMParameters() {
 		return [
-			'type' => 'integer',
+			'type' => 'string',
+			'length' => $this->get('length')
 		];
 	}
 
 	/**
 	 * Return prepared input for SQL.
 	 * @param  mixed $val
-	 * @return integer
+	 * @return string
 	 */
 	public function toSQL($val) {
-		return (int)$val;
+		return (string)$val;
 	}
 
 	/**
@@ -40,6 +41,6 @@ class IntegerProperty extends \Asgard\Entity\Property {
 	 * @return boolean
 	 */
 	public function fromSQL($val) {
-		return (int)$val;
+		return (string)$val;
 	}
 }

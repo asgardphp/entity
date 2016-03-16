@@ -1,5 +1,5 @@
 <?php
-namespace Asgard\Entity\Properties;
+namespace Asgard\Entity\Property;
 
 /**
  * File Property.
@@ -111,7 +111,7 @@ class FileProperty extends \Asgard\Entity\Property {
 	 * {@inheritDoc}
 	 */
 	public function getFormField() {
-		return 'Asgard\Form\Fields\FileField';
+		return 'Asgard\Form\Field\FileField';
 	}
 
 	/**

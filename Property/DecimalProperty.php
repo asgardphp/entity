@@ -1,17 +1,18 @@
 <?php
-namespace Asgard\Entity\Properties;
+namespace Asgard\Entity\Property;
 
 /**
- * Email Property.
+ * Decimal Property.
  * @author Michel Hognerud <michel@hognerud.com>
  */
-class EmailProperty extends TextProperty {
+class DecimalProperty extends \Asgard\Entity\Property {
 	/**
 	 * {@inheritDoc}
 	 */
-	public function prepareValidator(\Asgard\Validation\ValidatorInterface $validator) {
-		parent::prepareValidator($validator);
-		$validator->rule('email');
+	public function doSet($val, \Asgard\Entity\Entity $entity, $name) {
+		if($val === null || $val === false || $val === '')
+			return null;
+		return (double)$val;
 	}
 
 	/**
@@ -20,17 +21,19 @@ class EmailProperty extends TextProperty {
 	 */
 	public function getORMParameters() {
 		return [
-			'type' => 'string',
+			'type' => 'decimal',
+			'precision' => 20,
+			'scale' => 6,
 		];
 	}
 
 	/**
 	 * Return prepared input for SQL.
 	 * @param  mixed $val
-	 * @return string
+	 * @return double
 	 */
 	public function toSQL($val) {
-		return (string)$val;
+		return (double)$val;
 	}
 
 	/**
@@ -39,6 +42,6 @@ class EmailProperty extends TextProperty {
 	 * @return boolean
 	 */
 	public function fromSQL($val) {
-		return (string)$val;
+		return (double)$val;
 	}
 }

@@ -1,5 +1,5 @@
 <?php
-namespace Asgard\Entity\Properties;
+namespace Asgard\Entity\Property;
 
 /**
  * Entity Property.

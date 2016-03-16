@@ -1,5 +1,5 @@
 <?php
-namespace Asgard\Entity\Properties;
+namespace Asgard\Entity\Property;
 
 /**
  * Password Property.

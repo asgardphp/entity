@@ -1,18 +1,17 @@
 <?php
-namespace Asgard\Entity\Properties;
+namespace Asgard\Entity\Property;
 
 /**
- * String Property.
+ * Email Property.
  * @author Michel Hognerud <michel@hognerud.com>
  */
-class StringProperty extends \Asgard\Entity\Property {
+class EmailProperty extends TextProperty {
 	/**
 	 * {@inheritDoc}
 	 */
-	public function __construct(array $params) {
-		if(!isset($params['length']))
-			$params['length'] = 255;
-		parent::__construct($params);
+	public function prepareValidator(\Asgard\Validation\ValidatorInterface $validator) {
+		parent::prepareValidator($validator);
+		$validator->rule('email');
 	}
 
 	/**
@@ -22,7 +21,6 @@ class StringProperty extends \Asgard\Entity\Property {
 	public function getORMParameters() {
 		return [
 			'type' => 'string',
-			'length' => $this->get('length')
 		];
 	}
 

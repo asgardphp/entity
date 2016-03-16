@@ -1,5 +1,5 @@
 <?php
-namespace Asgard\Entity\Properties;
+namespace Asgard\Entity\Property;
 
 /**
  * Boolean Property.
@@ -25,7 +25,7 @@ class BooleanProperty extends \Asgard\Entity\Property {
 	 * {@inheritDoc}
 	 */
 	public function getFormField() {
-		return 'Asgard\Form\Fields\BooleanField';
+		return 'Asgard\Form\Field\BooleanField';
 	}
 
 	/**

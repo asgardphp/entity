@@ -1,18 +1,18 @@
 <?php
-namespace Asgard\Entity\Properties;
+namespace Asgard\Entity\Property;
 
 /**
- * Text Property.
+ * Integer Property.
  * @author Michel Hognerud <michel@hognerud.com>
  */
-class TextProperty extends \Asgard\Entity\Property {
+class IntegerProperty extends \Asgard\Entity\Property {
 	/**
 	 * {@inheritDoc}
 	 */
-	public function __construct(array $params) {
-		if(!isset($params['length']))
-			$params['length'] = 65535;
-		parent::__construct($params);
+	public function doSet($val, \Asgard\Entity\Entity $entity, $name) {
+		if($val === null || $val === false || $val === '')
+			return null;
+		return (int)$val;
 	}
 
 	/**
@@ -21,8 +21,7 @@ class TextProperty extends \Asgard\Entity\Property {
 	 */
 	public function getORMParameters() {
 		return [
-			'type' => 'text',
-			'length' => $this->get('length'),
+			'type' => 'integer',
 		];
 	}
 
@@ -32,7 +31,7 @@ class TextProperty extends \Asgard\Entity\Property {
 	 * @return integer
 	 */
 	public function toSQL($val) {
-		return (string)$val;
+		return (int)$val;
 	}
 
 	/**
@@ -41,6 +40,6 @@ class TextProperty extends \Asgard\Entity\Property {
 	 * @return boolean
 	 */
 	public function fromSQL($val) {
-		return (string)$val;
+		return (int)$val;
 	}
 }

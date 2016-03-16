@@ -1,11 +1,11 @@
 <?php
-namespace Asgard\Entity\Properties;
+namespace Asgard\Entity\Property;
 
 /**
- * Date Property.
+ * Datetime Property.
  * @author Michel Hognerud <michel@hognerud.com>
  */
-class DateProperty extends \Asgard\Entity\Property {
+class DatetimeProperty extends \Asgard\Entity\Property {
 	/**
 	 * {@inheritDoc}
 	 */
@@ -19,7 +19,7 @@ class DateProperty extends \Asgard\Entity\Property {
 	 */
 	public function getMessages() {
 		$messages = parent::getMessages();
-		$messages['instanceof'] = ':attribute must be a valid date.';
+		$messages['instanceof'] = ':attribute must be a valid datetime.';
 
 		return $messages;
 	}
@@ -37,16 +37,15 @@ class DateProperty extends \Asgard\Entity\Property {
 	protected function doSerialize($obj) {
 		if(!$obj)
 			return null;
-		return $obj->format('Y-m-d');
+		return $obj->format('Y-m-d H:i:s');
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	protected function doUnserialize($str) {
-		if(!$str)
-			return;
-		return \Asgard\Common\Date::createFromFormat('Y-m-d', $str);
+		if($str)
+			return \Asgard\Common\Datetime::createFromFormat('Y-m-d H:i:s', $str);
 	}
 
 	/**
@@ -56,21 +55,14 @@ class DateProperty extends \Asgard\Entity\Property {
 		if($val instanceof \Asgard\Common\DatetimeInterface)
 			return $val;
 		elseif(is_string($val))
-			return \Asgard\Common\Date::createFromFormat('Y-m-d', $val);
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	public function toString($obj) {
-		return $obj->format('Y-m-d');
+			return \Asgard\Common\Datetime::createFromFormat('Y-m-d H:i:s', $val);
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public function getFormField() {
-		return 'Asgard\Form\Fields\DateField';
+		return 'Asgard\Form\Field\DatetimeField';
 	}
 
 	/**
@@ -79,7 +71,7 @@ class DateProperty extends \Asgard\Entity\Property {
 	 */
 	public function getORMParameters() {
 		return [
-			'type' => 'date',
+			'type' => 'datetime',
 		];
 	}
 
@@ -89,7 +81,7 @@ class DateProperty extends \Asgard\Entity\Property {
 	 * @return string
 	 */
 	public function toSQL($val) {
-		return $val->format('Y-m-d');
+		return $val->format('Y-m-d H:i:s');
 	}
 
 	/**

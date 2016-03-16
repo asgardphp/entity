@@ -1,18 +1,18 @@
 <?php
-namespace Asgard\Entity\Properties;
+namespace Asgard\Entity\Property;
 
 /**
- * Decimal Property.
+ * Text Property.
  * @author Michel Hognerud <michel@hognerud.com>
  */
-class DecimalProperty extends \Asgard\Entity\Property {
+class TextProperty extends \Asgard\Entity\Property {
 	/**
 	 * {@inheritDoc}
 	 */
-	public function doSet($val, \Asgard\Entity\Entity $entity, $name) {
-		if($val === null || $val === false || $val === '')
-			return null;
-		return (double)$val;
+	public function __construct(array $params) {
+		if(!isset($params['length']))
+			$params['length'] = 65535;
+		parent::__construct($params);
 	}
 
 	/**
@@ -21,19 +21,18 @@ class DecimalProperty extends \Asgard\Entity\Property {
 	 */
 	public function getORMParameters() {
 		return [
-			'type' => 'decimal',
-			'precision' => 20,
-			'scale' => 6,
+			'type' => 'text',
+			'length' => $this->get('length'),
 		];
 	}
 
 	/**
 	 * Return prepared input for SQL.
 	 * @param  mixed $val
-	 * @return double
+	 * @return integer
 	 */
 	public function toSQL($val) {
-		return (double)$val;
+		return (string)$val;
 	}
 
 	/**
@@ -42,6 +41,6 @@ class DecimalProperty extends \Asgard\Entity\Property {
 	 * @return boolean
 	 */
 	public function fromSQL($val) {
-		return (double)$val;
+		return (string)$val;
 	}
 }
